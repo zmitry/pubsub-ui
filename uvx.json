@@ -2,21 +2,12 @@
     "name": "pubsub-ui",
     "version": "1.0.0",
     "description": "Streamlit UI for Google Cloud Pub/Sub emulator with AI features",
-    "main": "app.py",
-    "type": "streamlit",
-    "dependencies": {
-        "python": "requirements.txt",
-        "docker": {
-            "services": ["pubsub_emulator"],
-            "file": "docker-compose.yml"
-        }
+    "type": "command",
+    "command": {
+        "run": "streamlit run src/pubsub_ui/app.py",
+        "requirements": "requirements.txt"
     },
-    "scripts": {
-        "start": "streamlit run app.py",
-        "docker": "docker-compose up -d"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/zmitry/pubsub-ui.git"
+    "env": {
+        "PUBSUB_EMULATOR_HOST": "localhost:8681"
     }
 }
