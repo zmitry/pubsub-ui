@@ -1,5 +1,5 @@
 {
-    "name": "pubsub-emulator-ui",
+    "name": "pubsub-ui",
     "version": "1.0.0",
     "description": "Streamlit UI for Google Cloud Pub/Sub emulator with AI features",
     "main": "app.py",
@@ -17,6 +17,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/yourusername/pubsub-emulator-ui.git"
+        "url": "git+https://github.com/zmitry/pubsub-ui.git"
     }
 }

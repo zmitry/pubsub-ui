@@ -47,12 +47,7 @@ streamlit run app.py
 
 Run directly from GitHub:
 ```bash
-uvx --from git+https://github.com/yourusername/pubsub-emulator-ui pubsub-emulator-ui
-```
-
-Or after cloning:
-```bash
-uvx pubsub-emulator-ui
+uvx --from git+https://github.com/zmitry/pubsub-ui pubsub-ui
 ```
 
 ## Usage
@@ -62,21 +57,6 @@ uvx pubsub-emulator-ui
 3. Create subscriptions for your topics
 4. Publish messages and view them with AI-powered analysis
 
-## Project Structure
-
-- `app.py`: Main Streamlit application
-- `pubsub_client.py`: PubSub emulator client
-- `message_analyzer.py`: AI-powered message analysis
-- `storage.py`: Local storage for project persistence
-
 ## Environment Variables
 
 - `PUBSUB_EMULATOR_HOST`: PubSub emulator host (default: localhost:8681)
-
-## Development
-
-The project uses:
-- Streamlit for UI
-- google-cloud-pubsub for PubSub operations
-- Transformers for NLP tasks
-- Pandas & Plotly for visualizations
