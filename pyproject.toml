@@ -25,4 +25,4 @@ Homepage = "https://github.com/zmitry/pubsub-ui"
 Repository = "https://github.com/zmitry/pubsub-ui.git"
 
 [project.scripts]
-pubsub-ui = "pubsub_ui.app:main"
+pubsub-ui = "app:main"

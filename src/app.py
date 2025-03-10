@@ -1,6 +1,6 @@
 import streamlit as st
-from .pubsub_client import PubSubClient
-from .storage import LocalStorage
+from pubsub_client import PubSubClient
+from storage import LocalStorage
 
 
 @st.cache_resource
