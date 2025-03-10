@@ -40,7 +40,7 @@ docker run -p 8681:8681 messagebird/gcloud-pubsub-emulator:latest
 
 3. Run the Streamlit app:
 ```bash
-streamlit run app.py
+streamlit run src/app.py
 ```
 
 ### Using uvx
