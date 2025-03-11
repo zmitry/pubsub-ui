@@ -12,4 +12,4 @@ dependencies = [
 ]
 
 [project.scripts]
-run = "streamlit run src/app.py"
+run = "app:main"

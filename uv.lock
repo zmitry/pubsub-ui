@@ -719,9 +719,9 @@ wheels = [
 ]
 
 [[package]]
-name = "pubsub-ui"
-version = "1.0.0"
-source = { editable = "." }
+name = "pubsub-emulator"
+version = "0.1.0"
+source = { virtual = "." }
 dependencies = [
     { name = "google-cloud-pubsub" },
     { name = "plotly" },

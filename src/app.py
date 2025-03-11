@@ -75,7 +75,6 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.title("Project Selection")
         # Get saved project ID
         saved_project = st.session_state.storage.get('project_id')
         project_id = st.text_input(
@@ -92,7 +91,6 @@ def main():
                 st.session_state.project_id = project_id
             
             # Topic Management in Sidebar
-            st.header("Topic Management")
             try:
                 client = st.session_state.pubsub
                 topics = client.list_topics(st.session_state.project_id)
@@ -103,6 +101,12 @@ def main():
                     )
                     if selected_topic:
                         st.session_state.selected_topic = selected_topic
+                        st.session_state.subs_list = (
+                            st.session_state.pubsub.list_subscriptions(
+                                st.session_state.project_id,
+                                topic=selected_topic
+                            )
+                        )
                 else:
                     st.info("No topics found")
             except Exception as e:
@@ -112,15 +116,36 @@ def main():
                 result = show_topic_dialog(st.session_state.project_id)
                 if result:
                     st.rerun()
-    
+            if selected_topic:
+                try:
+                    if st.session_state.subs_list:
+                        selected_sub = st.selectbox(
+                            "Select Subscription",
+                            st.session_state.subs_list
+                        )
+                        if selected_sub:
+                            st.session_state.selected_sub = selected_sub
+                    else:
+                        st.info("No subscriptions found")
+                except Exception as e:
+                    st.error(f"Error listing subscriptions: {str(e)}")
+                if st.button("Create Subscription"):
+                    result = show_subscription_dialog(
+                        st.session_state.project_id,
+                        st.session_state.selected_topic
+                    )
+                    if result:
+                        st.rerun()
+                   
     # Main Content
     st.title("PubSub Emulator UI")
     
     if 'project_id' in st.session_state and 'selected_topic' in st.session_state:
         # Show topic details
         st.json({
-            "name": st.session_state.selected_topic,
-            "project": st.session_state.project_id
+            "project_id": st.session_state.project_id,
+            "subscription": st.session_state.selected_sub,
+            "topic": st.session_state.selected_topic,
         })
         
         # Message Operations
@@ -129,55 +154,47 @@ def main():
         if st.button("Publish Message"):
             if message:
                 try:
+                    topic_path = (
+                        f"projects/{st.session_state.project_id}"
+                        f"/topics/{st.session_state.selected_topic}"
+                    )
                     msg_id = st.session_state.pubsub.publish_message(
-                        st.session_state.selected_topic,
+                        topic_path,
                         message
                     )
                     st.success(f"Published message: {msg_id}")
                 except Exception as e:
                     st.error(f"Error publishing message: {str(e)}")
         
-        # Subscription Management
-        st.header("Subscription Management")
-        col1, col2 = st.columns([4, 1])
-        
-        with col1:
-            try:
-                subs = st.session_state.pubsub.list_subscriptions(
-                    st.session_state.project_id
-                )
-                if subs:
-                    selected_sub = st.selectbox(
-                        "Select Subscription",
-                        subs
-                    )
-                else:
-                    st.info("No subscriptions found")
-            except Exception as e:
-                st.error(f"Error listing subscriptions: {str(e)}")
-        
-        with col2:
-            if st.button("Create Subscription"):
-                result = show_subscription_dialog(
-                    st.session_state.project_id,
-                    st.session_state.selected_topic
-                )
-                if result:
-                    st.rerun()
-        
         # Pull Messages
         if 'selected_sub' in locals() and selected_sub:
             if st.button("Pull Messages"):
                 try:
-                    messages = st.session_state.pubsub.pull_messages(
-                        selected_sub
+                    sub_path = (
+                        f"projects/{st.session_state.project_id}"
+                        f"/subscriptions/{selected_sub}"
                     )
+                    messages = st.session_state.pubsub.pull_messages(sub_path)
                     if messages:
                         for msg in messages:
-                            with st.expander(
-                                f"Message {msg['message_id']}"
-                            ):
-                                st.json(msg)
+                            msg_id = msg['message_id']
+                            col1, col2 = st.columns([4, 1])
+                            with col1:
+                                with st.expander(f"Message {msg_id}"):
+                                    st.json(msg)
+                            with col2:
+                                if st.button("Ack", key=f"ack_{msg_id}"):
+                                    try:
+                                        st.session_state.pubsub.ack_message(
+                                            sub_path,
+                                            msg['ack_id']
+                                        )
+                                        st.success(f"Acknowledged: {msg_id}")
+                                        st.rerun()
+                                    except Exception as e:
+                                        st.error(
+                                            f"Error acknowledging: {str(e)}"
+                                        )
                     else:
                         st.info("No messages available")
                 except Exception as e:
