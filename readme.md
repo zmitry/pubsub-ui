@@ -17,13 +17,7 @@ A Streamlit-based UI for Google Cloud Pub/Sub emulator with AI-powered message a
 
 ### Using Docker Compose
 
-1. Start the services:
-```bash
-docker-compose up -d
-```
-
 This will start:
-- PubSub Emulator on port 8681
 - Streamlit UI on port 8501
 
 ### Local Development
@@ -32,31 +26,7 @@ This will start:
 ```bash
 pip install -r requirements.txt
 ```
-
-2. Start the PubSub emulator:
-```bash
-docker run -p 8681:8681 messagebird/gcloud-pubsub-emulator:latest
-```
-
-3. Run the Streamlit app:
+2. Run the Streamlit app:
 ```bash
 streamlit run src/app.py
 ```
-
-### Using uvx
-
-Run directly from GitHub:
-```bash
-uvx --from git+https://github.com/zmitry/pubsub-ui pubsub-ui
-```
-
-## Usage
-
-1. Enter a project ID in the sidebar
-2. Create or select a topic
-3. Create subscriptions for your topics
-4. Publish messages and view them with AI-powered analysis
-
-## Environment Variables
-
-- `PUBSUB_EMULATOR_HOST`: PubSub emulator host (default: localhost:8681)
