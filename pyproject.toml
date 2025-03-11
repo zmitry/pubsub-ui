@@ -1,25 +1,15 @@
 [project]
-name = "pubsub-ui"
-version = "1.0.0"
-description = "Streamlit UI for Google Cloud Pub/Sub emulator with AI features"
-authors = [
-    {name = "Dmitry", email = "muren23@gmail.com"}
-]
+name = "pubsub-emulator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
 dependencies = [
     "streamlit>=1.28.0",
     "google-cloud-pubsub>=2.18.0",
     "plotly>=5.18.0",
-    "python-dotenv>=1.0.0"
+    "python-dotenv>=1.0.0",
 ]
-requires-python = ">=3.10"
-
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
-[project.urls]
-Homepage = "https://github.com/zmitry/pubsub-ui"
-Repository = "https://github.com/zmitry/pubsub-ui.git"
 
 [project.scripts]
 run = "app:main"
