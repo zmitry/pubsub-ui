@@ -62,11 +62,10 @@ def show_subscription_dialog(project_id: str, topic_path: str):
 
 def main():
     st.set_page_config(
-        page_title="PubSub Emulator UI",
-        page_icon="📨",
-        layout="wide"
+            page_title="PubSub Emulator UI",
+            page_icon="📨",
+            layout="wide"
     )
-    
     # Initialize state
     if 'pubsub' not in st.session_state:
         st.session_state.pubsub = get_pubsub_client()
