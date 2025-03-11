@@ -1,6 +1,9 @@
-# PubSub Emulator UI with AI Features
+# PubSub Emulator UI
 
-A Streamlit-based UI for Google Cloud Pub/Sub emulator with AI-powered message analysis capabilities.
+<img width="1708" alt="image" src="https://github.com/user-attachments/assets/30aaf35a-405d-4dc8-ba5e-49f365a621fc" />
+
+
+A Streamlit-based UI for Google Cloud Pub/Sub emulator
 
 ## Features
 
